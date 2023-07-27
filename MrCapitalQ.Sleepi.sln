@@ -7,9 +7,31 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{0DEA463A-96A
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{89C1BA08-5F95-4EAA-922B-DB558979A479}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MrCapitalQ.Sleepi.Api", "src\MrCapitalQ.Sleepi.Api\MrCapitalQ.Sleepi.Api.csproj", "{52D8A16F-3FBE-4F58-AAEF-62E70F45209C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MrCapitalQ.Sleepi.Api.Tests", "test\MrCapitalQ.Sleepi.Api.Tests\MrCapitalQ.Sleepi.Api.Tests.csproj", "{AE267EEB-A44D-4498-B472-199D45AFE533}"
+EndProject
 Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{52D8A16F-3FBE-4F58-AAEF-62E70F45209C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{52D8A16F-3FBE-4F58-AAEF-62E70F45209C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{52D8A16F-3FBE-4F58-AAEF-62E70F45209C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{52D8A16F-3FBE-4F58-AAEF-62E70F45209C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AE267EEB-A44D-4498-B472-199D45AFE533}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AE267EEB-A44D-4498-B472-199D45AFE533}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AE267EEB-A44D-4498-B472-199D45AFE533}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AE267EEB-A44D-4498-B472-199D45AFE533}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{52D8A16F-3FBE-4F58-AAEF-62E70F45209C} = {0DEA463A-96AF-4830-9869-7F2AC623E6C0}
+		{AE267EEB-A44D-4498-B472-199D45AFE533} = {89C1BA08-5F95-4EAA-922B-DB558979A479}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E5D9DFEC-4B08-4B1A-848F-E0D5355365CC}
