@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using MrCapitalQ.Sleepi.Api.Services;
 
 namespace MrCapitalQ.Sleepi.Api.Controllers
 {
@@ -6,11 +7,20 @@ namespace MrCapitalQ.Sleepi.Api.Controllers
     [ApiController]
     public class SoundsController : ControllerBase
     {
+        private readonly ISoundPlayer _soundPlayer;
+
+        public SoundsController(ISoundPlayer soundPlayer)
+        {
+            _soundPlayer = soundPlayer;
+        }
+
         [HttpPut("Play", Name = nameof(PlaySounds))]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesDefaultResponseType]
         public IActionResult PlaySounds()
         {
+            _soundPlayer.Play();
+
             return NoContent();
         }
 
@@ -19,6 +29,8 @@ namespace MrCapitalQ.Sleepi.Api.Controllers
         [ProducesDefaultResponseType]
         public IActionResult StopSounds()
         {
+            _soundPlayer.Stop();
+
             return NoContent();
         }
     }
