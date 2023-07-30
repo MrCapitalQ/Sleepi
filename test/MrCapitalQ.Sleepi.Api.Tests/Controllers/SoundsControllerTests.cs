@@ -1,6 +1,4 @@
 using Microsoft.AspNetCore.Mvc;
-using Moq;
-using MrCapitalQ.Sleepi.Api.Services;
 
 namespace MrCapitalQ.Sleepi.Api.Tests.Controllers
 {
@@ -16,12 +14,22 @@ namespace MrCapitalQ.Sleepi.Api.Tests.Controllers
         }
 
         [Fact]
-        public void PlaySounds_CallsPlay()
+        public void PlaySounds_DefaultParams_CallsPlay()
         {
             var result = _controller.PlaySounds();
 
             Assert.IsType<NoContentResult>(result);
-            _soundPlayer.Verify(x => x.Play(), Times.Once);
+            _soundPlayer.Verify(x => x.Play(SoundType.Rain), Times.Once);
+        }
+
+        [Theory]
+        [InlineData(SoundType.Rain)]
+        public void PlaySounds_WithSoundType_CallsPlayWithSoundType(SoundType soundType)
+        {
+            var result = _controller.PlaySounds(soundType);
+
+            Assert.IsType<NoContentResult>(result);
+            _soundPlayer.Verify(x => x.Play(soundType), Times.Once);
         }
 
         [Fact]

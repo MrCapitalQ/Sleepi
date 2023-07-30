@@ -17,9 +17,9 @@ namespace MrCapitalQ.Sleepi.Api.Controllers
         [HttpPut("Play", Name = nameof(PlaySounds))]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesDefaultResponseType]
-        public IActionResult PlaySounds()
+        public IActionResult PlaySounds(SoundType soundType = SoundType.Rain)
         {
-            _soundPlayer.Play();
+            _soundPlayer.Play(soundType);
 
             return NoContent();
         }

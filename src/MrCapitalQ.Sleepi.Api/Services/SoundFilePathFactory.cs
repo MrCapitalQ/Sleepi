@@ -9,9 +9,14 @@
             _configuration = configuration;
         }
 
-        public string GetFilePath()
+        public string GetFilePath(SoundType soundType)
         {
-            return Path.Combine(_configuration.GetValue<string>("SoundsRootDirectory") ?? string.Empty, "rain.mp3");
+            var fileName = soundType switch
+            {
+                SoundType.Rain => "rain.mp3",
+                _ => "notFound.mp3",
+            };
+            return Path.Combine(_configuration.GetValue<string>("SoundsRootDirectory") ?? string.Empty, fileName);
         }
     }
 }

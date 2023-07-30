@@ -2,6 +2,6 @@
 {
     public interface ISoundFilePathFactory
     {
-        string GetFilePath();
+        string GetFilePath(SoundType soundType);
     }
 }

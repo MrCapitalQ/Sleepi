@@ -20,12 +20,13 @@ namespace MrCapitalQ.Sleepi.Api.Tests.Services
             _soundFilePathFactory = new(configuration);
         }
 
-        [Fact]
-        public void GetFilePath_ReturnsAbsoluteFilePath()
+        [Theory]
+        [InlineData(SoundType.Rain, "rain.mp3")]
+        public void GetFilePath_ReturnsAbsoluteFilePath(SoundType soundType, string expectedFileName)
         {
-            var actual = _soundFilePathFactory.GetFilePath();
+            var actual = _soundFilePathFactory.GetFilePath(soundType);
 
-            Assert.Equal(Path.Combine(_testWebRootPath, "rain.mp3"), actual);
+            Assert.Equal(Path.Combine(_testWebRootPath, expectedFileName), actual);
         }
     }
 }

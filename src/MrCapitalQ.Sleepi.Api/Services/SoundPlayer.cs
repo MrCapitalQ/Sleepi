@@ -12,7 +12,7 @@ namespace MrCapitalQ.Sleepi.Api.Services
             _soundFilePathFactory = soundFilePathFactory;
         }
 
-        public void Play()
+        public void Play(SoundType soundType)
         {
             if (_process is not null)
             {
@@ -20,7 +20,12 @@ namespace MrCapitalQ.Sleepi.Api.Services
                 _process = null;
             }
 
-            var path = _soundFilePathFactory.GetFilePath();
+            var path = _soundFilePathFactory.GetFilePath(soundType);
+            if (!Path.Exists(path))
+            {
+                throw new IOException($"File does not exist at path {path}");
+            }
+
             _process = new Process()
             {
                 StartInfo = new ProcessStartInfo
