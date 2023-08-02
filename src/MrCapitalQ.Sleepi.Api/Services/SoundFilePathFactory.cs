@@ -14,6 +14,7 @@
             var fileName = soundType switch
             {
                 SoundType.Rain => "rain.mp3",
+                SoundType.Brown => "brown.mp3",
                 _ => "notFound.mp3",
             };
             return Path.Combine(_configuration.GetValue<string>("SoundsRootDirectory") ?? string.Empty, fileName);

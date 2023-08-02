@@ -22,6 +22,7 @@ namespace MrCapitalQ.Sleepi.Api.Tests.Services
 
         [Theory]
         [InlineData(SoundType.Rain, "rain.mp3")]
+        [InlineData(SoundType.Brown, "brown.mp3")]
         public void GetFilePath_ReturnsAbsoluteFilePath(SoundType soundType, string expectedFileName)
         {
             var actual = _soundFilePathFactory.GetFilePath(soundType);
