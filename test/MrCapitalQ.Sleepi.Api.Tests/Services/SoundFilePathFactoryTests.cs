@@ -4,14 +4,14 @@ namespace MrCapitalQ.Sleepi.Api.Tests.Services
 {
     public class SoundFilePathFactoryTests
     {
-        private const string _testWebRootPath = "sounds";
+        private const string TestWebRootPath = "sounds";
         private readonly SoundFilePathFactory _soundFilePathFactory;
 
         public SoundFilePathFactoryTests()
         {
             var inMemorySettings = new Dictionary<string, string?>
             {
-                { "SoundsRootDirectory", _testWebRootPath }
+                { "SoundsRootDirectory", TestWebRootPath }
             };
 
             var configuration = new ConfigurationBuilder()
@@ -27,7 +27,7 @@ namespace MrCapitalQ.Sleepi.Api.Tests.Services
         {
             var actual = _soundFilePathFactory.GetFilePath(soundType);
 
-            Assert.Equal(Path.Combine(_testWebRootPath, expectedFileName), actual);
+            Assert.Equal(Path.Combine(TestWebRootPath, expectedFileName), actual);
         }
     }
 }

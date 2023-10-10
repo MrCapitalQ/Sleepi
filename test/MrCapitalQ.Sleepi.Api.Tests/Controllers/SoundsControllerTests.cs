@@ -4,13 +4,13 @@ namespace MrCapitalQ.Sleepi.Api.Tests.Controllers
 {
     public class SoundsControllerTests
     {
-        private readonly Mock<ISoundPlayer> _soundPlayer = new();
+        private readonly ISoundPlayer _soundPlayer = Substitute.For<ISoundPlayer>();
 
         private readonly SoundsController _controller;
 
         public SoundsControllerTests()
         {
-            _controller = new(_soundPlayer.Object);
+            _controller = new(_soundPlayer);
         }
 
         [Fact]
@@ -19,7 +19,7 @@ namespace MrCapitalQ.Sleepi.Api.Tests.Controllers
             var result = _controller.PlaySounds();
 
             Assert.IsType<NoContentResult>(result);
-            _soundPlayer.Verify(x => x.Play(SoundType.Rain), Times.Once);
+            _soundPlayer.Received(1).Play(SoundType.Rain);
         }
 
         [Theory]
@@ -29,7 +29,7 @@ namespace MrCapitalQ.Sleepi.Api.Tests.Controllers
             var result = _controller.PlaySounds(soundType);
 
             Assert.IsType<NoContentResult>(result);
-            _soundPlayer.Verify(x => x.Play(soundType), Times.Once);
+            _soundPlayer.Received(1).Play(soundType);
         }
 
         [Fact]
@@ -38,7 +38,7 @@ namespace MrCapitalQ.Sleepi.Api.Tests.Controllers
             var result = _controller.StopSounds();
 
             Assert.IsType<NoContentResult>(result);
-            _soundPlayer.Verify(x => x.Stop(), Times.Once);
+            _soundPlayer.Received(1).Stop();
         }
     }
 }
