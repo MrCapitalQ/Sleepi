@@ -3,6 +3,9 @@ $publishDirectory = ".\src\MrCapitalQ.Sleepi.Api\bin\Release\net7.0\linux-arm64\
 $currentDir = Get-Location
 
 try {
+    Set-Location $PSScriptRoot
+    Set-Location ..\..
+
     # Clean publish directory
     Remove-Item -LiteralPath $publishDirectory -Force -Recurse -ErrorAction Ignore
 
