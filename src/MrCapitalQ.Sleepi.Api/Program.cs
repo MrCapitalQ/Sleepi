@@ -23,6 +23,7 @@ var app = builder.Build();
 // Configure the HTTP request pipeline.
 app.UseSwagger();
 app.UseSwaggerUI();
+app.MapGet("/", c => { c.Response.Redirect("/swagger"); return Task.CompletedTask; });
 
 app.UseAuthorization();
 
