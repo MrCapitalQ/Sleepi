@@ -24,6 +24,7 @@ namespace MrCapitalQ.Sleepi.Api.Tests.Controllers
 
         [Theory]
         [InlineData(SoundType.Rain)]
+        [InlineData(SoundType.Brown)]
         public void PlaySounds_WithSoundType_CallsPlayWithSoundType(SoundType soundType)
         {
             var result = _controller.PlaySounds(soundType);
