@@ -44,11 +44,11 @@ namespace MrCapitalQ.Sleepi.Api.Services
 
         public void Stop()
         {
-            if (_process is not null)
-            {
-                _process.Kill();
-                _process = null;
-            }
+            if (_process is null)
+                return;
+
+            _process.Kill();
+            _process = null;
         }
     }
 }
