@@ -1,4 +1,4 @@
-$publishDirectory = ".\src\MrCapitalQ.Sleepi.Api\bin\Release\net7.0\linux-arm64\publish"
+$publishDirectory = ".\src\MrCapitalQ.Sleepi.Api\bin\Release\net8.0\linux-arm64\publish"
 
 $currentDir = Get-Location
 
