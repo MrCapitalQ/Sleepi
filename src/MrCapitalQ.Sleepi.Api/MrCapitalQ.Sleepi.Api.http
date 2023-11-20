@@ -1,0 +1,14 @@
+@MrCapitalQ.Sleepi.Api_HostAddress = http://localhost:5274
+
+
+PUT {{MrCapitalQ.Sleepi.Api_HostAddress}}/api/Sounds/Play
+
+###
+
+PUT {{MrCapitalQ.Sleepi.Api_HostAddress}}/api/Sounds/Play?soundType=Brown
+
+###
+
+PUT {{MrCapitalQ.Sleepi.Api_HostAddress}}/api/Sounds/Stop
+
+###

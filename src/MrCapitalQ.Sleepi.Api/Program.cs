@@ -1,32 +1,27 @@
 using MrCapitalQ.Sleepi.Api.Services;
-using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-
-builder.Services.AddControllers()
-    .AddJsonOptions(o =>
-    {
-        o.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
-    });
-
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
-
 builder.Services.AddSingleton<ISoundPlayer, SoundPlayer>();
 builder.Services.AddTransient<ISoundFilePathFactory, SoundFilePathFactory>();
 
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-app.UseSwagger();
-app.UseSwaggerUI();
-app.MapGet("/", c => { c.Response.Redirect("/swagger"); return Task.CompletedTask; });
+var soundsEndpoint = app.MapGroup("api/Sounds");
+soundsEndpoint.MapPut("Play",
+    (ISoundPlayer soundPlayer, SoundType soundType = SoundType.Rain) =>
+    {
+        soundPlayer.Play(soundType);
+        return TypedResults.NoContent();
+    });
 
-app.UseAuthorization();
-
-app.MapControllers();
+soundsEndpoint.MapPut("Stop",
+    (ISoundPlayer soundPlayer) =>
+    {
+        soundPlayer.Stop();
+        return TypedResults.NoContent();
+    });
 
 app.Run();
