@@ -9,38 +9,43 @@ namespace MrCapitalQ.Sleepi.Api.Services
 
         public BluetoothSpeakerManager(IConfiguration configuration) => _configuration = configuration;
 
-        public void Connect()
+        public async Task ConnectAsync()
         {
             var bluetoothSpeakerMacAddress = _configuration.GetValue<string>(SpeakerMacAddressKey);
             if (string.IsNullOrEmpty(bluetoothSpeakerMacAddress))
                 return;
 
-            new Process()
+            var process = new Process()
             {
-                StartInfo = new ProcessStartInfo
+                StartInfo = new()
                 {
                     FileName = "bluetoothctl",
                     Arguments = $"connect {bluetoothSpeakerMacAddress}",
+                    UseShellExecute = false,
                     CreateNoWindow = true
                 }
-            }.Start();
+            };
+            process.Start();
+            await process.WaitForExitAsync();
         }
 
-        public void Disconnect()
+        public async Task DisconnectAsync()
         {
             var bluetoothSpeakerMacAddress = _configuration.GetValue<string>(SpeakerMacAddressKey);
             if (string.IsNullOrEmpty(bluetoothSpeakerMacAddress))
                 return;
 
-            new Process()
+            var process = new Process()
             {
-                StartInfo = new ProcessStartInfo
+                StartInfo = new()
                 {
                     FileName = "bluetoothctl",
                     Arguments = $"disconnect {bluetoothSpeakerMacAddress}",
                     CreateNoWindow = true
                 }
-            }.Start();
+            };
+            process.Start();
+            await process.WaitForExitAsync();
         }
     }
 }

@@ -2,7 +2,7 @@
 
 namespace MrCapitalQ.Sleepi.Api.Services
 {
-    public sealed class SoundPlayer : ISoundPlayer, IDisposable
+    public sealed class SoundPlayer : ISoundPlayer, IAsyncDisposable
     {
         private readonly ISoundFilePathFactory _soundFilePathFactory;
         private readonly IBluetoothSpeakerManager _speakerManager;
@@ -14,7 +14,7 @@ namespace MrCapitalQ.Sleepi.Api.Services
             _speakerManager = speakerManager;
         }
 
-        public void Play(SoundType soundType)
+        public async Task PlayAsync(SoundType soundType)
         {
             if (_process is not null)
             {
@@ -28,11 +28,11 @@ namespace MrCapitalQ.Sleepi.Api.Services
                 throw new IOException($"File does not exist at path {path}");
             }
 
-            _speakerManager.Connect();
+            await _speakerManager.ConnectAsync();
 
             _process = new Process()
             {
-                StartInfo = new ProcessStartInfo
+                StartInfo = new()
                 {
                     FileName = "cvlc",
                     Arguments = path,
@@ -43,7 +43,7 @@ namespace MrCapitalQ.Sleepi.Api.Services
             _process.Start();
         }
 
-        public void Stop()
+        public async Task StopAsync()
         {
             if (_process is null)
                 return;
@@ -51,12 +51,9 @@ namespace MrCapitalQ.Sleepi.Api.Services
             _process.Kill();
             _process = null;
 
-            _speakerManager.Disconnect();
+            await _speakerManager.DisconnectAsync();
         }
 
-        public void Dispose()
-        {
-            Stop();
-        }
+        public async ValueTask DisposeAsync() => await StopAsync();
     }
 }

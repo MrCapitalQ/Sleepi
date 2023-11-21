@@ -2,7 +2,7 @@
 {
     public interface IBluetoothSpeakerManager
     {
-        void Connect();
-        void Disconnect();
+        Task ConnectAsync();
+        Task DisconnectAsync();
     }
 }

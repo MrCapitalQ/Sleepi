@@ -2,7 +2,7 @@
 {
     public interface ISoundPlayer
     {
-        void Play(SoundType soundType);
-        void Stop();
+        Task PlayAsync(SoundType soundType);
+        Task StopAsync();
     }
 }

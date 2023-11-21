@@ -8,32 +8,32 @@ namespace MrCapitalQ.Sleepi.Api.Tests.Endpoints
         private readonly ISoundPlayer _soundPlayer = Substitute.For<ISoundPlayer>();
 
         [Fact]
-        public void PlaySounds_DefaultParams_CallsPlay()
+        public async Task PlaySoundsAsync_DefaultParams_CallsPlayAsync()
         {
-            var result = SoundsEndpoints.PlaySounds(_soundPlayer);
+            var result = await SoundsEndpoints.PlaySoundsAsync(_soundPlayer);
 
             Assert.IsType<NoContent>(result);
-            _soundPlayer.Received(1).Play(SoundType.Rain);
+            await _soundPlayer.Received(1).PlayAsync(SoundType.Rain);
         }
 
         [Theory]
         [InlineData(SoundType.Rain)]
         [InlineData(SoundType.Brown)]
-        public void PlaySounds_WithSoundType_CallsPlayWithSoundType(SoundType soundType)
+        public async Task PlaySoundsAsync_WithSoundType_CallsPlayAsyncWithSoundType(SoundType soundType)
         {
-            var result = SoundsEndpoints.PlaySounds(_soundPlayer, soundType);
+            var result = await SoundsEndpoints.PlaySoundsAsync(_soundPlayer, soundType);
 
             Assert.IsType<NoContent>(result);
-            _soundPlayer.Received(1).Play(soundType);
+            await _soundPlayer.Received(1).PlayAsync(soundType);
         }
 
         [Fact]
-        public void StopSounds_CallsStop()
+        public async Task StopSounds_CallsStopAsync()
         {
-            var result = SoundsEndpoints.StopSounds(_soundPlayer);
+            var result = await SoundsEndpoints.StopSoundsAsync(_soundPlayer);
 
             Assert.IsType<NoContent>(result);
-            _soundPlayer.Received(1).Stop();
+            await _soundPlayer.Received(1).StopAsync();
         }
     }
 }

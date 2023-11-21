@@ -8,21 +8,21 @@ namespace MrCapitalQ.Sleepi.Api.Endpoints
         public static IEndpointRouteBuilder RegisterSoundsEndpoints(this IEndpointRouteBuilder builder)
         {
             var soundsEndpoint = builder.MapGroup("api/Sounds");
-            soundsEndpoint.MapPut("Play", PlaySounds);
-            soundsEndpoint.MapPut("Stop", StopSounds);
+            soundsEndpoint.MapPut("Play", PlaySoundsAsync);
+            soundsEndpoint.MapPut("Stop", StopSoundsAsync);
 
             return builder;
         }
 
-        public static NoContent PlaySounds(ISoundPlayer soundPlayer, SoundType soundType = SoundType.Rain)
+        public static async Task<NoContent> PlaySoundsAsync(ISoundPlayer soundPlayer, SoundType soundType = SoundType.Rain)
         {
-            soundPlayer.Play(soundType);
+            await soundPlayer.PlayAsync(soundType);
             return TypedResults.NoContent();
         }
 
-        public static NoContent StopSounds(ISoundPlayer soundPlayer)
+        public static async Task<NoContent> StopSoundsAsync(ISoundPlayer soundPlayer)
         {
-            soundPlayer.Stop();
+            await soundPlayer.StopAsync();
             return TypedResults.NoContent();
         }
     }
