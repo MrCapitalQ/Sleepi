@@ -19,15 +19,15 @@ try {
     # Include service definition file in publish directory.
     Copy-Item .\infra\linux\configure.sh $publishDirectory
 
+    # Stop existing sevice
+    ssh q@raspberrypi systemctl --user stop kestrel-sleepi.service
+
     # Copy publish directory to Raspberry Pi deploy destination
     scp -r $publishDirectory\* q@raspberrypi:/var/www/Sleepi
     if (!$?) { Exit $LASTEXITCODE }
 
-    # SSH into Raspberry Pi and execute the following command
-    # sudo bash /var/www/Sleepi/configure.sh
-    Write-Host "Build and file transfer complete." -ForegroundColor green
-    Write-Host "To complete the deployment, SSH into the Raspberry Pi and execute the following:" -ForegroundColor green
-    Write-Host "    bash /var/www/Sleepi/configure.sh" -ForegroundColor yellow
+    # Run script to configure service
+    ssh q@raspberrypi bash /var/www/Sleepi/configure.sh
 }
 finally {
     # Return to original directory
