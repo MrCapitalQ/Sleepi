@@ -2,14 +2,16 @@
 
 namespace MrCapitalQ.Sleepi.Api.Services
 {
-    public class SoundPlayer : ISoundPlayer
+    public sealed class SoundPlayer : ISoundPlayer, IDisposable
     {
         private readonly ISoundFilePathFactory _soundFilePathFactory;
+        private readonly IBluetoothSpeakerManager _speakerManager;
         private Process? _process;
 
-        public SoundPlayer(ISoundFilePathFactory soundFilePathFactory)
+        public SoundPlayer(ISoundFilePathFactory soundFilePathFactory, IBluetoothSpeakerManager speakerManager)
         {
             _soundFilePathFactory = soundFilePathFactory;
+            _speakerManager = speakerManager;
         }
 
         public void Play(SoundType soundType)
@@ -26,15 +28,14 @@ namespace MrCapitalQ.Sleepi.Api.Services
                 throw new IOException($"File does not exist at path {path}");
             }
 
+            _speakerManager.Connect();
+
             _process = new Process()
             {
                 StartInfo = new ProcessStartInfo
                 {
                     FileName = "cvlc",
                     Arguments = path,
-                    RedirectStandardOutput = true,
-                    RedirectStandardError = true,
-                    UseShellExecute = false,
                     CreateNoWindow = true
                 }
             };
@@ -49,6 +50,13 @@ namespace MrCapitalQ.Sleepi.Api.Services
 
             _process.Kill();
             _process = null;
+
+            _speakerManager.Disconnect();
+        }
+
+        public void Dispose()
+        {
+            Stop();
         }
     }
 }

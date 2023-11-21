@@ -6,6 +6,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddSingleton<ISoundPlayer, SoundPlayer>();
 builder.Services.AddTransient<ISoundFilePathFactory, SoundFilePathFactory>();
+builder.Services.AddTransient<IBluetoothSpeakerManager, BluetoothSpeakerManager>();
 
 var app = builder.Build();
 

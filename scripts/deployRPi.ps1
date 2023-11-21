@@ -27,7 +27,7 @@ try {
     # sudo bash /var/www/Sleepi/configure.sh
     Write-Host "Build and file transfer complete." -ForegroundColor green
     Write-Host "To complete the deployment, SSH into the Raspberry Pi and execute the following:" -ForegroundColor green
-    Write-Host "    sudo bash /var/www/Sleepi/configure.sh" -ForegroundColor yellow
+    Write-Host "    bash /var/www/Sleepi/configure.sh" -ForegroundColor yellow
 }
 finally {
     # Return to original directory
