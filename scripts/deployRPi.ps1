@@ -1,5 +1,9 @@
 $publishDirectory = ".\src\MrCapitalQ.Sleepi.Api\bin\Release\net8.0\linux-arm64\publish"
+$deployDirectory = "/var/www/Sleepi"
+$sshUser = "q"
+$sshHostName = "sleepi"
 
+$sshDeployTarget = "$sshUser@$sshHostName"
 $currentDir = Get-Location
 
 try {
@@ -20,14 +24,18 @@ try {
     Copy-Item .\infra\linux\configure.sh $publishDirectory
 
     # Stop existing sevice
-    ssh q@raspberrypi systemctl --user stop kestrel-sleepi.service
+    ssh $sshDeployTarget "systemctl --user stop kestrel-sleepi.service"
+    
+    # Ensure deploy destination exists
+    ssh $sshDeployTarget "sudo mkdir -p $deployDirectory && sudo chown $sshUser $deployDirectory"
+    if (!$?) { Exit $LASTEXITCODE }
 
     # Copy publish directory to Raspberry Pi deploy destination
-    scp -r $publishDirectory\* q@raspberrypi:/var/www/Sleepi
+    scp -r $publishDirectory\* "$($sshDeployTarget):$deployDirectory"
     if (!$?) { Exit $LASTEXITCODE }
 
     # Run script to configure service
-    ssh q@raspberrypi bash /var/www/Sleepi/configure.sh
+    ssh $sshDeployTarget "bash $deployDirectory/configure.sh"
 }
 finally {
     # Return to original directory
